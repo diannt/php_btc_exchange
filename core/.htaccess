@@ -1,0 +1,4 @@
+AddType text/css .css
+AddType text/javascript .js
+RewriteEngine on
+RewriteRule ^(.*) / [L,R]
