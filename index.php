@@ -42,6 +42,21 @@ $autoloader->registerClass('EgoPayException', LIB_PATH . 'EgoPay/sci/EgoPaySci.p
 
 spl_autoload_register(array($autoloader, 'autoload'));
 
+// Register new namespaces
+spl_autoload_register(function ($class) {
+    $prefix = 'lib\\';
+    $base_dir = LIB_PATH;
+
+    if (strpos($class, $prefix) === 0) {
+        $relative_class = substr($class, strlen($prefix));
+        $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+        if (file_exists($file)) {
+            require $file;
+        }
+    }
+});
+
 $configPath = 'config/config.php';
 if (file_exists($configPath))
     require_once $configPath;
